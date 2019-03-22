@@ -1,0 +1,32 @@
+version: '3'
+services:
+  db:
+    image: postgres:11
+    restart: always
+    volumes:
+      - db:/var/lib/postgresql/data
+    env_file:
+      - db.env
+
+  app:
+    image: nextcloud:15.0.5
+    restart: always
+    volumes:
+      - nextcloud:/var/www/html
+    environment:
+      - POSTGRES_HOST=db
+    env_file:
+      - db.env
+    depends_on:
+      - db
+    networks:
+      - server_net
+    container_name: nextcloud
+
+networks:
+  server_net:
+    external: true
+
+volumes:
+  db:
+  nextcloud:
