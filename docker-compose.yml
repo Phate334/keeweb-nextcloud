@@ -1,4 +1,4 @@
-version: '3'
+version: '3.5'
 services:
   db:
     image: postgres:11
@@ -20,12 +20,13 @@ services:
     depends_on:
       - db
     networks:
-      - server_net
+      - server-net
     container_name: nextcloud
 
 networks:
-  server_net:
+  server-net:
     external: true
+    name: server-net
 
 volumes:
   db:
