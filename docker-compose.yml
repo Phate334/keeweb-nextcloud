@@ -20,6 +20,7 @@ services:
     depends_on:
       - db
     networks:
+      - default
       - server-net
     container_name: nextcloud
 
