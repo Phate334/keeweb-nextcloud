@@ -5,29 +5,18 @@ services:
     restart: always
     volumes:
       - db:/var/lib/postgresql/data
-    env_file:
-      - db.env
 
   app:
-    image: nextcloud:15.0.5
+    image: nextcloud:16.0.1
     restart: always
     volumes:
       - nextcloud:/var/www/html
-    environment:
-      - POSTGRES_HOST=db
     env_file:
       - db.env
     depends_on:
       - db
-    networks:
-      - default
-      - server-net
-    container_name: nextcloud
-
-networks:
-  server-net:
-    external: true
-    name: server-net
+    ports:
+      - 80:80
 
 volumes:
   db:
