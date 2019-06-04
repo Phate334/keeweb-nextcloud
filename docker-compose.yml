@@ -5,19 +5,27 @@ services:
     restart: always
     volumes:
       - db:/var/lib/postgresql/data
-
+    environment:
+      - POSTGRES_PASSWORD=postgres
   app:
     image: nextcloud:16.0.1
     restart: always
     volumes:
       - nextcloud:/var/www/html
     env_file:
-      - db.env
+      - nc.env
     depends_on:
       - db
+  web:
+    build: ./caddy
+    restart: always
+    volumes:
+      - caddy:/root/.caddy/
     ports:
-      - 80:80
+      - "80:80"
+      - "443:443"
 
 volumes:
   db:
   nextcloud:
+  caddy:
